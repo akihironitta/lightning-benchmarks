@@ -1,0 +1,100 @@
+name: Benchmark
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      push:
+        description: 'Push generated results to gh-pages branch'
+        required: false
+        default: true
+        type: boolean
+
+concurrency:
+  group: benchmark
+  cancel-in-progress: true
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: '0'
+
+    - uses: actions/setup-python@v3
+      with:
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: |
+        python -m pip install -U pip
+        python -m pip install asv
+
+    - name: Cache repository and env
+      uses: actions/cache@v3
+      with:
+        path: |
+          .asv/env/
+          pytorch-lightning/
+        key: asv-env-${{ hashFiles('asv.conf.json') }}
+        restore-keys: asv-env-
+
+    - name: Cache datasets
+      uses: actions/cache@v3
+      with:
+        path: data
+        key: asv-datasets-${{ hashFiles('benchmarks/**') }}
+        restore-keys: asv-datasets-
+
+    - name: Pull asv results
+      run: |
+        # Not sure this is the best way to restore previous results to .asv/results from another branch
+        git checkout results
+        cp -r .asv/results previous_results
+        git checkout master
+        mkdir -p .asv
+        mv previous_results .asv/results
+
+    - name: Run benchmarks
+      # Give 10min for other steps. GitHub Actions allow 360 at the maximum.
+      timeout-minutes: 350
+      run: |
+        asv machine --machine "github-hosted-runner" --yes
+        # asv run 1.5.0..master $ASV_RUN_OPTIONS --bench AnotherBoring
+        for pl_hash in $(cat benchmarks/version_list.txt); do
+          asv run ${pl_hash}^! $ASV_RUN_OPTIONS --bench AnotherBoring
+        done
+      env:
+        ASV_RUN_OPTIONS: "--skip-existing-successful --parallel"
+
+    - name: git config
+      run: |
+        git config --global user.name "$GIT_AUTHOR_NAME"
+        git config --global user.email "$GIT_AUTHOR_EMAIL"
+      env:
+        GIT_AUTHOR_NAME: ${{ github.actor }}
+        GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
+      if: always()
+
+    - name: Push built page to gh-pages branch
+      run: |
+        asv publish
+        git fetch origin gh-pages:gh-pages
+        asv gh-pages
+      if: always()
+
+    - name: Push new results to results branch
+      run: |
+        mv .asv/results previous_results_with_new_results
+        git checkout results
+        rm -rf .asv/results
+        mv previous_results_with_new_results .asv/results
+        git add .asv/results
+        git commit -m "New results from $(git rev-parse --short $GITHUB_SHA)" && git push origin results || echo "No new results to push :)"
+      if: always()

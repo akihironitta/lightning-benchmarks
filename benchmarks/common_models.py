@@ -129,27 +129,3 @@ class BoringModel(LightningModule):
 
     def configure_optimizers(self):
         return torch.optim.SGD(self.layer.parameters(), lr=0.1)
-
-
-class ParityModuleRNN(LightningModule):
-    def __init__(self):
-        super().__init__()
-        self.rnn = nn.LSTM(10, 20, batch_first=True)
-        self.linear_out = nn.Linear(in_features=20, out_features=5)
-        self.example_input_array = torch.rand(2, 3, 10)
-
-    def forward(self, x):
-        seq, last = self.rnn(x)
-        return self.linear_out(seq)
-
-    def training_step(self, batch, batch_nb):
-        x, y = batch
-        y_hat = self(x)
-        loss = F.mse_loss(y_hat, y)
-        return {"loss": loss}
-
-    def configure_optimizers(self):
-        return torch.optim.Adam(self.parameters(), lr=0.02)
-
-    def train_dataloader(self):
-        return DataLoader(AverageDataset(), batch_size=30)

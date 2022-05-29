@@ -2,7 +2,13 @@ import numpy as np
 from torch.utils.data import DataLoader
 
 from benchmarks.common_data import RandomDataset
-from benchmarks.common_models import BoringModel, ParityModuleCIFAR, ParityModuleMNIST, ParityModuleRNN
+from benchmarks.common_models import (
+    BoringModel,
+    ParityModuleCIFAR,
+    ParityModuleMNIST,
+    ParityModuleRNN,
+    YetAnotherBoringModel,
+)
 from benchmarks.common_utils import measure_loops
 from pytorch_lightning import Trainer
 
@@ -87,6 +93,25 @@ class AnotherBoringBenchmark:
         trainer.fit(model, data)
         trainer.test(model, data)
         trainer.validate(model, data)
+
+    def time_it(self):
+        self.fit_model()
+
+    def peakmem_it(self):
+        self.fit_model()
+
+
+class YetAnotherBoringBenchmark:
+    def fit_model(self):
+        model = YetAnotherBoringModel()
+        trainer = Trainer(
+            max_epochs=1,
+            logger=False,
+            benchmark=True,  # False in 1.5.x and True in 1.6.x by default.
+        )
+        trainer.fit(model)
+        trainer.test(model)
+        trainer.validate(model)
 
     def time_it(self):
         self.fit_model()

@@ -66,7 +66,7 @@ jobs:
       timeout-minutes: 350
       run: |
         asv machine --machine "github-hosted-runner" --yes
-        asv run 1.5.0..master $ASV_RUN_OPTIONS --steps 100 --bench YetAnotherBoring
+        asv run 1.6.0..master $ASV_RUN_OPTIONS
         for pl_hash in $(cat benchmarks/version_list.txt); do
           asv run ${pl_hash}^! $ASV_RUN_OPTIONS --bench YetAnotherBoring
         done

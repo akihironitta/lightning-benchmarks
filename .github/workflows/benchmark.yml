@@ -72,7 +72,7 @@ jobs:
           asv run ${pl_hash}^! $ASV_RUN_OPTIONS --bench YetAnotherBoring
         done
       env:
-        ASV_RUN_OPTIONS: "--skip-existing-successful --parallel --show-stderr"
+        ASV_RUN_OPTIONS: "--skip-existing-successful --parallel --show-stderr -v"
 
     - name: git config
       run: |

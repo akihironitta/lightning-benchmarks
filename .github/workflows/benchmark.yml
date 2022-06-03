@@ -50,11 +50,18 @@ jobs:
         restore-keys: asv-env-
 
     - name: Cache datasets
+      id: cache-datasets
       uses: actions/cache@v3
       with:
         path: data
-        key: asv-datasets-${{ hashFiles('benchmarks/**') }}
+        key: asv-datasets-${{ hashFiles('.github/scripts/download_datasets.py') }}
         restore-keys: asv-datasets-
+
+    - name: Download datasets if no cache found
+      if: steps.cache-datasets.outputs.cache-hit != 'true'
+      run: |
+        pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cpu
+        python .github/scripts/download_datasets.py
 
     - name: Pull asv results
       run: |

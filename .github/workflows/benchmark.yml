@@ -8,7 +8,7 @@ on:
     branches:
       - master
   schedule:
-    # cron: '0 2,9,17 * * *' in JST (UTC+9:00)
+    # cron: '0 1,9,17 * * *' in JST (UTC+9:00)
     - cron: '0 0,8,16 * * *'
   workflow_dispatch:
     inputs:

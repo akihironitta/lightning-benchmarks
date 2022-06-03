@@ -87,10 +87,10 @@ jobs:
         git fetch origin gh-pages:gh-pages
         asv gh-pages
         # Push new results to `results` branch
-        mv .asv/results previous_results_with_new_results
+        mv .asv/results new_results
         git checkout $GIT_BRANCH_RESULTS
         rm -rf .asv/results
-        mv previous_results_with_new_results .asv/results
+        mv new_results .asv/results
         git add .asv/results
         git commit -m "New results from $(git rev-parse --short $GITHUB_SHA)" && git push origin $GIT_BRANCH_RESULTS || echo "No new results to push :)"
       env:

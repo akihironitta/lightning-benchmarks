@@ -6,9 +6,8 @@ from torchvision import models, transforms
 from torchvision.datasets import CIFAR10
 
 from benchmarks.common_data import AverageDataset, MNIST, RandomDataset
+from benchmarks import PATH_DATASETS
 from pytorch_lightning import LightningModule
-
-_PATH_DATASETS = "./data/"
 
 
 class ParityModuleRNN(LightningModule):
@@ -64,7 +63,7 @@ class ParityModuleMNIST(LightningModule):
 
     def train_dataloader(self):
         return DataLoader(
-            MNIST(root=_PATH_DATASETS, train=True, download=True),
+            MNIST(root=PATH_DATASETS, train=True, download=True),
             batch_size=128,
             num_workers=1,
         )
@@ -100,7 +99,7 @@ class ParityModuleCIFAR(LightningModule):
 
     def train_dataloader(self):
         return DataLoader(
-            CIFAR10(root=_PATH_DATASETS, train=True, download=True, transform=self.transform),
+            CIFAR10(root=PATH_DATASETS, train=True, download=True, transform=self.transform),
             batch_size=32,
             num_workers=1,
         )

@@ -82,18 +82,18 @@ jobs:
 
     - name: Run short benchmarks on pull request
       # Run only a small set of benchmarks for sanity check.
-      if: ${{ github.event_name == 'pull_request' }}
+      if: github.event_name == 'pull_request'
       run: |
         asv machine --machine "github-hosted-runner" --yes
-        asv run master^! $ASV_RUN_OPTIONS --bench YetAnotherBoring
-        asv run master^! $ASV_RUN_OPTIONS --bench bench_fit.MNIST
+        # asv run master^! $ASV_RUN_OPTIONS --bench YetAnotherBoring
+        # asv run master^! $ASV_RUN_OPTIONS --bench bench_fit.MNIST
         asv run master^! $ASV_RUN_OPTIONS --bench bench_fit.CIFAR
       env:
-        ASV_RUN_OPTIONS: "--skip-existing-successful --parallel"
+        ASV_RUN_OPTIONS: "--skip-existing-successful --parallel -v -e"
 
     - name: Sync results and gh-pages
       # Don't push on PRs
-      if: ${{ github.event_name != 'pull_request' }}
+      if: always() && github.event_name != 'pull_request'
       run: |
         git config --global user.name "$GIT_AUTHOR_NAME"
         git config --global user.email "$GIT_AUTHOR_EMAIL"

@@ -82,7 +82,7 @@ jobs:
 
     - name: Run short benchmarks on pull request
       # Run only a small set of benchmarks for sanity check.
-      if: always() && github.event_name == 'pull_request'
+      if: github.event_name == 'pull_request'
       run: |
         asv machine --machine "github-hosted-runner" --yes
         asv run master^! $ASV_RUN_OPTIONS --bench YetAnotherBoring

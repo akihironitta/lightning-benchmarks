@@ -85,11 +85,11 @@ jobs:
       if: github.event_name == 'pull_request'
       run: |
         asv machine --machine "github-hosted-runner" --yes
-        asv run master^! $ASV_RUN_OPTIONS --bench YetAnotherBoring
-        asv run master^! $ASV_RUN_OPTIONS --bench bench_fit.MNIST
+        # asv run master^! $ASV_RUN_OPTIONS --bench YetAnotherBoring
+        # asv run master^! $ASV_RUN_OPTIONS --bench bench_fit.MNIST
         asv run master^! $ASV_RUN_OPTIONS --bench bench_fit.CIFAR
       env:
-        ASV_RUN_OPTIONS: "--skip-existing-successful --parallel"
+        ASV_RUN_OPTIONS: "--skip-existing-successful --parallel -v -e"
 
     - name: Sync results and gh-pages
       # Don't push on PRs

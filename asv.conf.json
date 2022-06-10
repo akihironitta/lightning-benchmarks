@@ -7,7 +7,7 @@
     "project": "pytorch-lightning",
 
     // The project's homepage
-    "project_url": "https://github.com/PyTorchLightning/pytorch-lightning",
+    "project_url": "https://github.com/akihironitta/lightning-benchmarks",
 
     // The URL or local path of the source code repository for the
     // project being benchmarked
@@ -91,9 +91,8 @@
     //
     "matrix": {
         "req": {
-            "pytorch": ["1.8.2", "1.11"],
+            "pytorch": ["1.8.2", "1.11.0"],
             "torchvision": [""],
-            "pip+protobuf": ["3.20.1"],  // https://github.com/PyTorchLightning/pytorch-lightning/issues/13159
         }
     },
 

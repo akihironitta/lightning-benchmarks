@@ -18,7 +18,8 @@ dependencies:
       - horovod
       - deepspeed<0.6.0
       - fairscale
-      - bagua-cuda113
+      # TODO: Fix import error following https://discuss.mxnet.apache.org/t/oserror-libnccl-so-2-cannot-open-shared-object-file-no-such-file-or-directory/6966
+      # - bagua-cuda113
       # loggers
       - neptune-client
       - comet-ml

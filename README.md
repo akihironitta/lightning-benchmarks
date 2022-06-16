@@ -49,5 +49,3 @@ asv preview
 
 - add smaller benchmarks (non end-to-end)
 - add more benchmarks
-- Should each test case be hardware-agnostic?
-  - maybe, yes, to visualise multiple stats in the same graph. If the stats of running on gpus goes down, we'll know that it's something wrong with gpu-related code.

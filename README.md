@@ -1,21 +1,21 @@
 # Benchmarks on PyTorch Lightning
 
-- [akihironitta.com/lightning-benchmarks](https://www.akihironitta.com/lightning-benchmarks): See benchmark results.
-- [asv documentation](https://asv.readthedocs.io/en/stable/)
+- See results at [akihironitta.com/lightning-benchmarks](https://www.akihironitta.com/lightning-benchmarks).
+- See [asv documentation](https://asv.readthedocs.io/en/stable/) for writing benchmarks.
 
 ## What's this repository?
 
-This repository measures memory usage and speed of simple benchmark scripts using PyTorch Lightning.
+This repository was created to measure memory usage and speed of simple benchmark scripts using PyTorch Lightning.
 It originally started as my private repository, but I made it pubilc hoping that someone in the community would benefit from it.
 
 So far, I've used this repo to locate the following regressions:
 
-- [tqdm progress bar in v1.6 is slower than v1.5 #13179](https://github.com/Lightning-AI/pytorch-lightning/issues/13179)
-- [v1.6 is slower than v1.5 #12713](https://github.com/Lightning-AI/pytorch-lightning/issues/12713)
+- [Lightning-AI/lightning#13179 tqdm progress bar in v1.6 is slower than v1.5](https://github.com/Lightning-AI/lightning/issues/13179)
+- [Lightning-AI/lightning#12713 v1.6 is slower than v1.5](https://github.com/Lightning-AI/pytorch-lightning/issues/12713)
 
 ## Writing benchmarks
 
-- Benchmarking scripts have to be compatible to 1.5 and 1.6!
+- Benchmarking scripts have to be compatible to 1.5 and 1.6.
 - See examples:
   - [NumPy benchmarks](https://github.com/numpy/numpy/tree/main/benchmarks/benchmarks)
   - [SciPy benchmarks](https://github.com/scipy/scipy/tree/main/benchmarks/benchmarks)

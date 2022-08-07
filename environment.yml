@@ -9,4 +9,5 @@ dependencies:
   - python=3.9
   - pip
   - pytorch=1.10.2
-  - torchvision  # determined by pytorch
+  - torchvision  # don't sepcify version since it's determined by pytorch
+  - setuptools=58.2.0  # https://github.com/Lightning-AI/lightning/issues/12324

@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
     inputs:
       push:
-        description: 'Push generated results to gh-pages branch'
+        description: 'Push generated results to `results` branch'
         required: false
         default: true
         type: boolean
@@ -74,10 +74,11 @@ jobs:
       timeout-minutes: 350
       run: |
         asv machine --machine "github-hosted-runner" --yes
-        asv run 1.6.0..master $ASV_RUN_OPTIONS
+        # Run benchmarks with versions listed in `version_list.txt`
         for pl_hash in $(cat benchmarks/version_list.txt); do
           asv run ${pl_hash}^! $ASV_RUN_OPTIONS --bench YetAnotherBoring
         done
+        asv run 1.7.0..master $ASV_RUN_OPTIONS
       env:
         ASV_RUN_OPTIONS: "--skip-existing-successful --parallel"
 

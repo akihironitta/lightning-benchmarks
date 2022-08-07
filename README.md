@@ -19,6 +19,13 @@ So far, I've used this repo to locate the following regressions:
 - See examples:
   - [NumPy benchmarks](https://github.com/numpy/numpy/tree/main/benchmarks/benchmarks)
   - [SciPy benchmarks](https://github.com/scipy/scipy/tree/main/benchmarks/benchmarks)
+- Notes on method names:
+  - `track_` suffix records a return value.
+  - `time_` suffix records time.
+  - `timeraw_` suffix runs the benchmark runs in a seperate process and records time. Useful for measuring import time.
+  - `peakmem_` suffix records peak memory usage. It also captures memory usage during `setup`. To avoid this, use `setup_cache`.
+  - `mem_` suffix records the size of a returned Python object.
+  - `setup_cache` runs only once per benchmark class while `setup` runs before each benchmark case within the benchmark class.
 
 ## Running benchmarks
 

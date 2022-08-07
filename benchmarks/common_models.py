@@ -5,8 +5,8 @@ from torch.utils.data import DataLoader
 from torchvision import models, transforms
 from torchvision.datasets import CIFAR10
 
-from benchmarks.common_data import AverageDataset, MNIST, RandomDataset
 from benchmarks import PATH_DATASETS
+from benchmarks.common_data import AverageDataset, MNIST, RandomDataset
 from pytorch_lightning import LightningModule
 
 

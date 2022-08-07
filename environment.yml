@@ -4,32 +4,9 @@ channels:
   - pytorch
   - conda-forge
 
-# Add any optional dependencies for `pytorch-lightning`.
-# Specify versions of PyTorch-related packages for robustness.
+# Add optional dependencies for `pytorch-lightning` as needed.
 dependencies:
   - python=3.9
   - pip
-  - pytorch=1.11.0
-  - torchvision=0.12.0
-  - cudatoolkit=11.3
-  - pip:
-      # strategies
-      - hivemind
-      - horovod
-      - deepspeed<0.6.0
-      - fairscale
-      # TODO: Fix import error following https://discuss.mxnet.apache.org/t/oserror-libnccl-so-2-cannot-open-shared-object-file-no-such-file-or-directory/6966
-      # - bagua-cuda113
-      # loggers
-      - neptune-client
-      - comet-ml
-      - mlflow
-      - wandb
-      # extra
-      - matplotlib
-      - torchtext
-      - omegaconf
-      - hydra-core
-      - jsonargparse[signatures]
-      - gcsfs
-      - rich
+  - pytorch=1.10.2
+  - torchvision  # determined by pytorch

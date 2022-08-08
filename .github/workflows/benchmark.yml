@@ -75,20 +75,20 @@ jobs:
         asv machine --machine "github-hosted-runner" --yes
         # Run benchmarks with versions listed in `version_list.txt`
         for pl_hash in $(cat benchmarks/version_list.txt); do
-          asv run ${pl_hash}^! $ASV_RUN_OPTIONS --bench YetAnotherBoring
+          asv run ${pl_hash}^! $ASV_RUN_OPTIONS --bench BoringBenchmark
         done
         asv run 1.7.0..master $ASV_RUN_OPTIONS
       env:
         ASV_RUN_OPTIONS: "--skip-existing-successful --parallel"
 
-    - name: Run short benchmarks on pull request
+    - name: Run benchmarks with PL master on pull request
       # Run only a small set of benchmarks for sanity check.
       if: github.event_name == 'pull_request'
+      # Give 10min for other steps. GitHub Actions allow 360 at the maximum.
+      timeout-minutes: 350
       run: |
         asv machine --machine "github-hosted-runner" --yes
-        # asv run master^! $ASV_RUN_OPTIONS --bench YetAnotherBoring
-        # asv run master^! $ASV_RUN_OPTIONS --bench bench_fit.MNIST
-        asv run master^! $ASV_RUN_OPTIONS --bench bench_fit.CIFAR
+        asv run master^!
       env:
         ASV_RUN_OPTIONS: "--skip-existing-successful --parallel -v -e"
 

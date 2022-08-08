@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
     inputs:
       push:
-        description: 'Push generated results to `results` branch'
+        description: 'Push generated results to gh-pages branch'
         required: false
         default: true
         type: boolean
@@ -38,8 +38,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install -U pip
-        # my fork disables git submodule update
-        pip install git+https://github.com/akihironitta/asv.git@master
+        python -m pip install asv
 
     - name: Cache repository and env
       uses: actions/cache@v3

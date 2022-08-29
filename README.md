@@ -54,5 +54,5 @@ asv preview
 
 ### TODO / open questions
 
-- add smaller benchmarks (non end-to-end)
 - add more benchmarks
+- add smaller benchmarks

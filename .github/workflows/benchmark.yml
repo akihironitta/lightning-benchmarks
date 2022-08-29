@@ -73,11 +73,7 @@ jobs:
       timeout-minutes: 350
       run: |
         asv machine --machine "github-hosted-runner" --yes
-        # Run benchmarks with versions listed in `version_list.txt`
-        for pl_hash in $(cat benchmarks/version_list.txt); do
-          asv run ${pl_hash}^! $ASV_RUN_OPTIONS --bench BoringBenchmark
-        done
-        asv run 1.7.0..master $ASV_RUN_OPTIONS
+        asv run HASHFILE:version_list.txt $ASV_RUN_OPTIONS
       env:
         ASV_RUN_OPTIONS: "--skip-existing-successful --parallel"
 

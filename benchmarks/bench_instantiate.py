@@ -3,7 +3,7 @@ import torch
 from pytorch_lightning import Trainer
 
 
-class TrainerInstantiationSuite:
+class TrainerBenchmark:
     param_names = ["accelerator"]
     params = [["cpu", "gpu"]]
 

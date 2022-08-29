@@ -1,0 +1,16 @@
+name: benchmark
+
+channels:
+  - pytorch
+  - conda-forge
+
+# Add optional dependencies for `pytorch-lightning` as needed.
+dependencies:
+  - python=3.9
+  - pip
+  - pytorch=1.10.2
+  - torchvision  # don't sepcify version since it's determined by pytorch
+  - cpuonly
+  - setuptools=58.2.0  # https://github.com/Lightning-AI/lightning/issues/12324
+  - pip:
+    - Pillow<9.0
